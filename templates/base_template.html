@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{% block title %}{% endblock %} - mgstuff</title>
+    <!-- Load CSS -->
+    <link href="../static/css/style.css" rel="stylesheet" type="text/css" />
+    <!-- Load Icon Font -->
+    <link href="../static/css/webfont.css" rel="stylesheet" type="text/css" />
+    <!-- Load jQuery library -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <!-- Load jCarousel js -->
+    <script type="text/javascript" src="../static/js/jquery.jcarousel.js"></script>
+    <!-- Load MixItUup js -->
+    <script type="text/javascript" src="../static/js/jquery.mixitup.js"></script>
+    <!-- Load js -->
+    <script type="text/javascript" src="../static/js/custom3.js"></script>
+    <title>mgstuff</title>
+    {% endblock %}
+</head>
+<body>
+	<!-- Start Menu -->
+	<div class="menubar" data-scroll="true" style="margin-top: 0px">
+		<a href="/home" class="logo">mgstuff</a>
+		<ul class="mainmenu">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/personality">Personality</a></li>
+            		</ul>
+	</div>
+	<!-- End Menu -->
+    {% block content %}{% endblock %}
+</body>
+</html>

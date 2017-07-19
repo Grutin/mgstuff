@@ -1,0 +1,65 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+    Personality
+{% endblock %}
+
+{% block head %}
+    {{ super() }}
+   <script src="{{ url_for('static', filename='js/personality.js') }}"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+
+   {% if dataFile != "none" %}
+      <script>
+          dataToChart({{ dataFile|tojson }});
+      </script>
+   {% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Start Team Section Divider -->
+<div class="section divider">
+    <h2>Personality</h2>
+    <a class="scroll" id="about"></a>
+</div>
+<!-- End Section Divider -->
+
+<div class="content" >
+     <p class="main dark-gray">IBM's machine learning platform (Watson) offers an API that can derive some elements of someone's personality from what this person wrote.
+         <br><a href="https://personality-insights-livedemo.mybluemix.net/">More details here.</a>
+    </p>
+    <form action = "http://localhost:5000/personality" method = "POST" enctype = "multipart/form-data">
+        <div class="person">
+            <div class="left-col">
+                <p>To run the analysis, either paste some text:</p>
+                <input name="paragraph_text" id="text_input_field" type="text" name="textField" />
+            </div>
+            <div class="right-col">
+                <p>Or upload a file:</p>
+                     <input type = "file" name = "file" id="fileItem" />
+            </div>
+        </div>
+        <!-- Clear :) -->
+            <div class="clear"></div>
+        <!-- End Person Block -->
+
+        <div class="input_button">
+            <input class="submit" id= "submit" type = "submit" value="Submit" />
+        </div>
+    </form>
+</div>
+
+<div class="content">
+
+    {% if dataFile != "none" %}
+        {% for key, value in dataFile.items() %}
+        <canvas id={{key}} width="400px" height="225px"></canvas>
+        {% endfor %}
+    {% endif %}
+</div>
+
+
+{% endblock %}
+

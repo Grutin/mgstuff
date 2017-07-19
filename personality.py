@@ -18,13 +18,13 @@ def get_api_answer(file):
 
     try:
         r = requests.post(POST_URL, data = file, headers = headers)
+        if r.status_code == 200: #success
+            print("success")
+            return r.text
 
     except requests.exceptions.RequestException as e:
         show_error()
 
-    if r.status_code == 200: #success
-        print("success")
 
-        return r.text
 
 

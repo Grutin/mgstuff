@@ -25,8 +25,10 @@ def personality():
 
         # if there is text being sent, turn that text in a file. otherwise, just get the file sent.
         if data["paragraph_text"] != '':
-            f = open("testfile.txt", "w")
-            f.write(data["paragraph_text"])
+            f = open("testfile.txt", "wb")
+            encodedData = data["paragraph_text"].encode('ascii','ignore')
+            f.write(encodedData)
+            f.close()
         else:
             f = request.files['file']
 

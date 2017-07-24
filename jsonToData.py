@@ -3,56 +3,58 @@ import json
 # jsonToData takes in the API JSON response and converts it to a JavaScript dict that can then get displayed in personality.html
 
 def jsonToData(json_data):
+    if json_data is None:
+        print("json_data is None")
+    else:
+        json_data = json.loads(json_data)
+        data_dict = dict()
 
-    json_data = json.loads(json_data)
-    data_dict = dict()
-
-    big_five = json_data["personality"]
-    needs = json_data["needs"]
-    values = json_data["values"]
+        big_five = json_data["personality"]
+        needs = json_data["needs"]
+        values = json_data["values"]
 
 
-    # start by getting data for big_five, needs, values. structure is [root]/[personality]/[each big five]/[sub big five]
-    for majorkey, subdict in json_data.items():
-            # major key is at personality level
+        # start by getting data for big_five, needs, values. structure is [root]/[personality]/[each big five]/[sub big five]
+        for majorkey, subdict in json_data.items():
+                # major key is at personality level
 
-            if majorkey in ["needs","values"]:
-                raw_score_data = []
-                percentile_data = []
-
-                for subkey in json_data[majorkey]:
-                    raw_score_data.append(subkey["raw_score"])
-                    percentile_data.append(subkey["percentile"])
-
-                data_dict[majorkey] = [raw_score_data,percentile_data]
-
-            elif majorkey == "personality":
-
-                raw_score_data = []
-                percentile_data = []
-
-                # subkey is at each big five level, value is at sub big five level
-
-                for subkey in json_data[majorkey]:
-                    raw_score_data.append(subkey["raw_score"])
-                    percentile_data.append(subkey["percentile"])
-
-                data_dict[majorkey] = [raw_score_data,percentile_data]
-
-                raw_score_data = []
-                percentile_data = []
-
-                # this calculates the scores for the sub categories within big 5
-                for subkey in json_data[majorkey]:
+                if majorkey in ["needs","values"]:
                     raw_score_data = []
                     percentile_data = []
-                    for subsubkey in subkey["children"]:
-                        raw_score_data.append(subsubkey["raw_score"])
-                        percentile_data.append(subsubkey["percentile"])
-                    data_dict[subkey['name'].replace(" ", "_")] = [raw_score_data,percentile_data]
+
+                    for subkey in json_data[majorkey]:
+                        raw_score_data.append(subkey["raw_score"])
+                        percentile_data.append(subkey["percentile"])
+
+                    data_dict[majorkey] = [raw_score_data,percentile_data]
+
+                elif majorkey == "personality":
+
+                    raw_score_data = []
+                    percentile_data = []
+
+                    # subkey is at each big five level, value is at sub big five level
+
+                    for subkey in json_data[majorkey]:
+                        raw_score_data.append(subkey["raw_score"])
+                        percentile_data.append(subkey["percentile"])
+
+                    data_dict[majorkey] = [raw_score_data,percentile_data]
+
+                    raw_score_data = []
+                    percentile_data = []
+
+                    # this calculates the scores for the sub categories within big 5
+                    for subkey in json_data[majorkey]:
+                        raw_score_data = []
+                        percentile_data = []
+                        for subsubkey in subkey["children"]:
+                            raw_score_data.append(subsubkey["raw_score"])
+                            percentile_data.append(subsubkey["percentile"])
+                        data_dict[subkey['name'].replace(" ", "_")] = [raw_score_data,percentile_data]
 
 
-    print(data_dict)
+        print(data_dict)
     return data_dict
 
 

@@ -55,22 +55,28 @@
 </div>
 
 
-
-
 <div class="content">
     <!--only add content if the template received a file from the API-->
     {% if dataFile != "none" %}
     <!--The 3 columns-->
     <div class="left-col">
         {% for key, value in dataFile.items() %}
-        <ul>
-            <li>
-                {{key}}
-            </li>
-            <li>
-                {{value}}
-            </li>
-        </ul>
+        <div class="tab">
+          <button class="tablinks" onclick="openCity(event, 'Data')">Data</button>
+          <button class="tablinks" onclick="openCity(event, 'Graph')">Graph</button>
+        </div>
+        <div id="Data" class="tabcontent">
+             <ul>
+                <li>
+                    {{key}}
+                </li>
+                <li>
+                    {{value}}
+                </li>
+            </ul>
+        </div>
+        <div id="Graph" class="tabcontent">
+        </div>
         {% endfor %}
     </div>
     <div class="middle-col">

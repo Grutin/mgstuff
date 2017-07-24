@@ -590,17 +590,80 @@ div.person div.image img {
 	position: absolute;
 }
 
-div.person div.left-col {
-    width: 40%;
+
+/* STRUCTURE */
+
+.left-col {
+	width: 290px;
 	float: left;
-	margin-bottom: 40px;
+	padding: 5px 15px;
 }
 
-div.person div.right-col {
-    width: 40%;
-	float: right;
-	padding: 0px 30px;
+.middle-col {
+	width: 294px; /* Account for margins + border values */
+	float: left;
+	padding: 5px 15px;
+	margin: 0px 5px 5px 5px;
 }
+
+.right-col {
+	width: 270px;
+	padding: 5px 15px;
+	float: left;
+}
+footer {
+	clear: both;
+	padding: 0 15px;
+}
+
+/************************************************************************************
+MEDIA QUERIES
+*************************************************************************************/
+/* for 980px or less */
+@media screen and (max-width: 980px) {
+
+
+	.left-col {
+		width: 41%;
+		padding: 1% 4%;
+	}
+	.middle-col {
+		width: 41%;
+		padding: 1% 4%;
+		margin: 0px 0px 5px 5px;
+		float: right;
+	}
+
+	.right-col {
+		clear: both;
+		padding: 1% 4%;
+		width: auto;
+		float: none;
+	}
+
+}
+
+/* for 700px or less */
+@media screen and (max-width: 600px) {
+
+	.left-col {
+		width: auto;
+		float: none;
+	}
+
+	.middle-col {
+		width: auto;
+		float: none;
+		margin-left: 0px;
+	}
+
+	.right-col {
+		width: auto;
+		float: none;
+	}
+
+}
+
 
 
 
@@ -965,7 +1028,6 @@ input {
 	line-height: 50px;
 	height: 200px;
 	font-size: 18px;
-	width: 500px;
 	border: 1px solid #6093e7;
 	outline: none;
 	border-radius: 3px;

@@ -51,9 +51,32 @@
     </form>
 </div>
 
-<div class="content">
 
+
+
+<div class="content">
     {% if dataFile != "none" %}
+    <!--The 3 columns-->
+    <div class="left-col">
+        {% for key, value in dataFile.items() %}
+        <ul>
+            <li>
+                {{key}}
+            </li>
+            <li>
+                {{value}}
+            </li>
+        </ul>
+        {% endfor %}
+    </div>
+    <div class="middle-col">
+
+    </div>
+    <div class="right-col">
+
+    </div>
+    <!--For graphs-->
+
         {% for key, value in dataFile.items() %}
         <canvas id={{key}} width="400px" height="225px"></canvas>
         {% endfor %}

@@ -36,8 +36,11 @@
                 <p>To run the analysis, either paste some text:</p>
                 <input name="paragraph_text" id="text_input_field" type="text" name="textField" />
             </div>
+            <div class="middle-col">
+                <p>- Or -</p>
+            </div>
             <div class="right-col">
-                <p>Or upload a file:</p>
+                <p>Upload a txt file:</p>
                      <input type = "file" name = "file" id="fileItem" />
             </div>
         </div>
@@ -55,6 +58,7 @@
 
 
 <div class="content">
+    <!--only add content if the template received a file from the API-->
     {% if dataFile != "none" %}
     <!--The 3 columns-->
     <div class="left-col">

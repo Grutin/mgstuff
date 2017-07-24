@@ -21,6 +21,14 @@ function openCity(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 
+// this handles the data display in Data tab of the result section
+
+function dataToTab(data_dict) {
+    document.addEventListener("DOMContentLoaded", function(event) {
+        
+    }
+}
+
 // this handles the chart display
 
 function dataToChart(data_dict) {
@@ -48,9 +56,10 @@ function dataToChart(data_dict) {
                 case "Agreeableness": labels_list = ["altruism","cooperation","modesty","uncompromising","sympathy","trust"];  break;
                 case "Emotional_range": labels_list = ["anger","anxiety","depression","immoderation","self_consciousness","susceptible_to_stress"];  break;
             }
-
+        // compile all the data in the tab
+                        
         // now compile all the data in the graph
-
+            
             var ctx = document.getElementById(id_list[i]).getContext('2d');
             var myChart = new Chart(ctx, {
               type: 'radar',

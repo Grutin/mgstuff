@@ -18,10 +18,12 @@ def get_api_answer(file):
     try:
         with open("testfile.txt","r") as f:
             r = requests.post(POST_URL, data=f, headers=headers)
-            if r.status_code == 200: #success
+            if r.error is None and r.status_code == 200: #success
                 print("success")
                 return r.text
             else:
+                print("R error:")
+                print(r.error)
                 print("R status code:")
                 print(r.status_code)
                 print(r)

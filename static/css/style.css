@@ -63,6 +63,12 @@ div.tab button.active {
 	Responsive 3-column layout - outside of Treviso
 ******************************************************************/
 
+.pagewrap {
+    padding: 5px;
+	width: 960px;
+	margin: 20px auto;
+}
+
 .left-col {
 	width: 290px;
 	float: left;
@@ -74,16 +80,13 @@ div.tab button.active {
 	float: left;
 	padding: 5px 15px;
 	margin: 0px 5px 5px 5px;
+
 }
 
 .right-col {
 	width: 270px;
 	padding: 5px 15px;
 	float: left;
-}
-footer {
-	clear: both;
-	padding: 0 15px;
 }
 
 /* for 980px or less */
@@ -288,6 +291,8 @@ h6 {
 /******************************************************************
 	Main
 ******************************************************************/
+
+
 .content {
 	max-width: 960px;
 	width: 80%;

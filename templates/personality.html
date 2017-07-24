@@ -12,6 +12,7 @@
    {% if dataFile != "none" %}
       <script>
           dataToChart({{ dataFile|tojson }});
+          dataToDataTab({{ dataFile|tojson }});
       </script>
    {% endif %}
 
@@ -27,21 +28,22 @@
 <!-- End Section Divider -->
 
 <div class="content" >
-     <p class="main dark-gray">IBM's machine learning platform (Watson) offers an API that can derive some elements of someone's personality from what this person wrote.
-         <br><a href="https://personality-insights-livedemo.mybluemix.net/">More details here.</a>
-    </p>
+     <h5>IBM's machine learning platform (Watson) offers an API that can derive some elements of someone's personality from what this person wrote.
+         <br>
+         <a href="https://personality-insights-livedemo.mybluemix.net/">More details here.</a>
+    </h5>
     <form action = "http://localhost:5000/personality" method = "POST" enctype = "multipart/form-data">
-        <div class="person">
+        <div>
             <div class="left-col">
-                <p>To run the analysis, either paste some text:</p>
+                <h5>To run the analysis, either paste some text:</h5>
                 <input name="paragraph_text" id="text_input_field" type="text" name="textField" />
             </div>
             <div class="middle-col">
-                <p>- Or -</p>
+                <h2 style="text-align:center; line-height:278px">- Or -</h2>
             </div>
             <div class="right-col">
-                <p>Upload a txt file:</p>
-                     <input type = "file" name = "file" id="fileItem" />
+                <h5>Upload a txt file:</h5>
+                     <input type = "file" name = "file" id="fileItem"  />
             </div>
         </div>
         <!-- Clear :) -->
@@ -55,36 +57,42 @@
 </div>
 
 
-<div class="content">
+<div class="content pagewrap" id="col-container">
     <!--only add content if the template received a file from the API-->
     {% if dataFile != "none" %}
     <!--The 3 columns-->
-    <div class="left-col">
-        {% for key, value in dataFile.items() %}
+    <div class="left-col" id="bigfive_col">
         <div class="tab">
           <button class="tablinks" onclick="openCity(event, 'Data')">Data</button>
           <button class="tablinks" onclick="openCity(event, 'Graph')">Graph</button>
         </div>
-        <div id="Data" class="tabcontent">
-             <ul>
-                <li>
-                    {{key}}
-                </li>
-                <li>
-                    {{value}}
-                </li>
-            </ul>
+        <div class="Data" class="tabcontent">
         </div>
-        <div id="Graph" class="tabcontent">
+        <div class="Graph" class="tabcontent">
         </div>
-        {% endfor %}
     </div>
-    <div class="middle-col">
-
+    <div class="middle-col" id="needs_col">
+        <div class="tab">
+          <button class="tablinks" onclick="openCity(event, 'Data')">Data</button>
+          <button class="tablinks" onclick="openCity(event, 'Graph')">Graph</button>
+        </div>
+        <div class="Data" class="tabcontent">
+        </div>
+        <div class="Graph" class="tabcontent">
+        </div>
     </div>
-    <div class="right-col">
-
+    <div class="right-col" id="values_col">
+        <div class="tab">
+          <button class="tablinks" onclick="openCity(event, 'Data')">Data</button>
+          <button class="tablinks" onclick="openCity(event, 'Graph')">Graph</button>
+        </div>
+        <div class="Data" class="tabcontent">
+        </div>
+        <div class="Graph" class="tabcontent">
+        </div>
     </div>
+</div>
+<div class="content pagewrap">
     <!--For graphs-->
 
         {% for key, value in dataFile.items() %}

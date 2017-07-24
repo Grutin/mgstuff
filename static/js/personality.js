@@ -21,13 +21,37 @@ function openCity(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 
-// this handles the data display in Data tab of the result section
 
-function dataToTab(data_dict) {
+// writes data into the 3 columns and the data menu
+
+function dataToDataTab(data_dict) {
     document.addEventListener("DOMContentLoaded", function(event) {
-        
-    }
+        main_categories = ["personality","values","needs"];
+        three_col = document.getElementById("col-container").children;
+
+        // iterate over the 3 columns / 3 main categories
+        for (i = 0; i<main_categories.length; i++ ) {
+
+            var new_ul = document.createElement("UL");
+            labels_list = returnLabelList(main_categories[i]);
+            // iterate over the labels
+            for (var j = 0; j < labels_list.length; j++) {
+                new_li = document.createElement("LI");
+                new_text_node = document.createTextNode(labels_list[j]);
+                new_li.appendChild(new_text_node);
+                new_sub_li = document.createElement("LI");
+                // the [1] below corresponds to getting percentiles instead of raw value.
+                new_sub_text_node = document.createTextNode(data_dict[main_categories[i]][1][j]);
+                new_sub_li.appendChild(new_sub_text_node);
+                new_li.appendChild(new_sub_li);
+                new_ul.appendChild(new_li);
+            }
+            three_col[i].children[1].appendChild(new_ul);
+        }
+
+    });
 }
+
 
 // this handles the chart display
 
@@ -43,21 +67,10 @@ function dataToChart(data_dict) {
         // iterate over the list of ids to build each chart
         for (var i=0; i < id_list.length; i++ ) {
 
-            labels_list = [];
-
             // this switch helps build the list for labels of the chart (labels_list)
-            switch(id_list[i]) {
-                case "personality": labels_list = ["openness","conscientiousness","extraversion","agreeableness","emotional_range"]; break;
-                case "needs": labels_list = ["challenge","closeness","curiosity","excitement","harmony","ideal","liberty","love","practicality","self_expression","stability","structure"];  break;
-                case "values": labels_list = ["conservation","openness_to_change","hedonism","self_enhancement","self_transcendence"];  break;
-                case "Openness": labels_list = ["adventurousness","artistic_interests","emotionality","imagination","intellect","liberalism"];  break;
-                case "Conscientiousness": labels_list = ["achievement_striving","cautiousness","dutifulness","orderliness","self_discipline","self_efficacy"];  break;
-                case "Extraversion": labels_list = ["activity_level","assertiveness","cheerfulness","excitement_seeking","outgoing","gregariousness"];  break;
-                case "Agreeableness": labels_list = ["altruism","cooperation","modesty","uncompromising","sympathy","trust"];  break;
-                case "Emotional_range": labels_list = ["anger","anxiety","depression","immoderation","self_consciousness","susceptible_to_stress"];  break;
-            }
-        // compile all the data in the tab
-                        
+            labels_list = returnLabelList(id_list[i]);
+
+
         // now compile all the data in the graph
             
             var ctx = document.getElementById(id_list[i]).getContext('2d');
@@ -86,6 +99,19 @@ function dataToChart(data_dict) {
         }
 
     });
+}
+
+function returnLabelList(parent_label) {
+    switch(parent_label) {
+        case "personality": return ["openness","conscientiousness","extraversion","agreeableness","emotional_range"]; break;
+        case "needs": return ["challenge","closeness","curiosity","excitement","harmony","ideal","liberty","love","practicality","self_expression","stability","structure"];  break;
+        case "values": return ["conservation","openness_to_change","hedonism","self_enhancement","self_transcendence"];  break;
+        case "Openness": return ["adventurousness","artistic_interests","emotionality","imagination","intellect","liberalism"];  break;
+        case "Conscientiousness": return ["achievement_striving","cautiousness","dutifulness","orderliness","self_discipline","self_efficacy"];  break;
+        case "Extraversion": return ["activity_level","assertiveness","cheerfulness","excitement_seeking","outgoing","gregariousness"];  break;
+        case "Agreeableness": return ["altruism","cooperation","modesty","uncompromising","sympathy","trust"];  break;
+        case "Emotional_range": return ["anger","anxiety","depression","immoderation","self_consciousness","susceptible_to_stress"];  break;
+    }
 }
 
 function checkButton() {

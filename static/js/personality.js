@@ -1,24 +1,33 @@
 // this handles the tab interactions on personality.html
 
-function openCity(evt, cityName) {
+function openTab(tab, tabName) {
     // Declare all variables
     var i, tabcontent, tablinks;
 
     // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("tabcontent");
+    tabcontent = [tab.parentNode.nextElementSibling, tab.parentNode.nextElementSibling.nextElementSibling];
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
 
     // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tablinks");
+    tablinks = tab.parentNode.children;
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
 
     // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
+    for (i = 0; i < tabcontent.length; i++) {
+        if (hasClass(tabcontent[i],tabName)) {
+            tabcontent[i].style.display = "block";
+        }
+    }
+    tab.className += " active";
+}
+
+// just a helper function for above
+function hasClass(element, cls) {
+    return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
 }
 
 
@@ -27,6 +36,7 @@ function openCity(evt, cityName) {
 function dataToDataTab(data_dict) {
     document.addEventListener("DOMContentLoaded", function(event) {
         main_categories = ["personality","values","needs"];
+        sub_categories = ["Openness","Conscientiousness","Extraversion","Agreeableness","Emotional_range"];
         three_col = document.getElementById("col-container").children;
 
         // iterate over the 3 columns / 3 main categories
@@ -40,18 +50,68 @@ function dataToDataTab(data_dict) {
                 new_text_node = document.createTextNode(labels_list[j]);
                 new_li.appendChild(new_text_node);
                 new_sub_li = document.createElement("LI");
-                // the [1] below corresponds to getting percentiles instead of raw value.
-                new_sub_text_node = document.createTextNode(data_dict[main_categories[i]][1][j]);
-                new_sub_li.appendChild(new_sub_text_node);
+                // generating the progress bars and vallues. the [1] below corresponds to getting percentiles instead of raw value.
+                new_sub_progress_node = document.createElement("PROGRESS");
+                new_sub_progress_node.className += "progress";
+                new_sub_progress_node.max = 1;
+                new_sub_progress_node.value = data_dict[main_categories[i]][1][j];
+                new_sub_value_node = document.createElement("SPAN");
+                new_sub_value_node.textContent = data_dict[main_categories[i]][1][j].toString().substring(0,4);
+                new_sub_value_node.style.float = "right";
+                //new_sub_text_node = document.createTextNode(data_dict[main_categories[i]][1][j]);
+                new_sub_li.appendChild(new_sub_progress_node);
+                new_sub_li.appendChild(new_sub_value_node);
                 new_li.appendChild(new_sub_li);
                 new_ul.appendChild(new_li);
             }
             three_col[i].children[1].appendChild(new_ul);
         }
 
+        // now doing the sub_categories within big5
+        for (i = 0; i < sub_categories.length; i++) {
+            var parent_li = $("li:contains("+sub_categories[i]+")")[0];
+            // the parent div is necessary to hide/display all at once
+            var new_div = document.createElement("div");
+            new_div.id = sub_categories[i];
+            labels_list = returnLabelList(sub_categories[i]);
+             // eaach of those sub categories have a series of subsubcategories
+            for (var j = 0; j < labels_list.length; j++) {
+                new_li = document.createElement("LI");
+                new_text_node = document.createTextNode(labels_list[j]);
+                new_li.appendChild(new_text_node);
+                new_sub_li = document.createElement("LI");
+                // generating the progress bars and vallues. the [1] below corresponds to getting percentiles instead of raw value.
+                new_sub_progress_node = document.createElement("PROGRESS");
+                new_sub_progress_node.className += "progress";
+                new_sub_progress_node.max = 1;
+                new_sub_progress_node.value = data_dict[sub_categories[i]][1][j];
+                new_sub_value_node = document.createElement("SPAN");
+                new_sub_value_node.textContent = data_dict[sub_categories[i]][1][j].toString().substring(0,4);
+                new_sub_value_node.style.float = "right";
+                new_sub_li.appendChild(new_sub_progress_node);
+                new_sub_li.appendChild(new_sub_value_node);
+                new_li.appendChild(new_sub_li);
+                new_div.appendChild(new_li);
+            }
+            parent_li.appendChild(new_div);
+        }
+
+        // make the collapsable chevrons first requires to add
+
+        // now put the "Data" tab active in the columns
+        DataTabs = $( ".tablinks:contains('Data')" );
+        for (i = 0; i<DataTabs.length;i++) {
+            DataTabs[i].className += " active";
+        }
+
     });
 }
 
+
+// helper function for the
+function toggleCollapse(menu) {
+
+}
 
 // this handles the chart display
 
@@ -103,7 +163,7 @@ function dataToChart(data_dict) {
 
 function returnLabelList(parent_label) {
     switch(parent_label) {
-        case "personality": return ["openness","conscientiousness","extraversion","agreeableness","emotional_range"]; break;
+        case "personality": return ["Openness","Conscientiousness","Extraversion","Agreeableness","Emotional_range"]; break;
         case "needs": return ["challenge","closeness","curiosity","excitement","harmony","ideal","liberty","love","practicality","self_expression","stability","structure"];  break;
         case "values": return ["conservation","openness_to_change","hedonism","self_enhancement","self_transcendence"];  break;
         case "Openness": return ["adventurousness","artistic_interests","emotionality","imagination","intellect","liberalism"];  break;

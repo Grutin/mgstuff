@@ -19,9 +19,17 @@ Designed & Handcrafted by Zan from ninetofive.me
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 
 
+
 /******************************************************************
 	Tab menu - outside of Treviso
 ******************************************************************/
+
+/* progress bars */
+
+progress {
+    display:inline-block;
+    width:80%;
+}
 
 /* Style the tab */
 div.tab {
@@ -39,6 +47,8 @@ div.tab button {
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
+    display:inline-block;
+    width:50%;
 }
 
 /* Change background color of buttons on hover */
@@ -106,14 +116,17 @@ div.tab button.active {
 
 	.right-col {
 		clear: both;
+		width: 41%;
+
 		padding: 1% 4%;
-		width: auto;
 		float: none;
 	}
 
 }
 
 /* for 700px or less */
+/******************************************************************
+
 @media screen and (max-width: 600px) {
 
 	.left-col {

@@ -12,7 +12,7 @@ def jsonToData(json_data):
         big_five = json_data["personality"]
         needs = json_data["needs"]
         values = json_data["values"]
-
+        consumption_preferences = json_data["consumption_preferences"];
 
         # start by getting data for big_five, needs, values. structure is [root]/[personality]/[each big five]/[sub big five]
         for majorkey, subdict in json_data.items():
@@ -52,7 +52,14 @@ def jsonToData(json_data):
                             raw_score_data.append(subsubkey["raw_score"])
                             percentile_data.append(subsubkey["percentile"])
                         data_dict[subkey['name'].replace(" ", "_")] = [raw_score_data,percentile_data]
-
+                        
+                elif majorkey == "consumption_preferences":
+                    raw_score_data = []
+                    
+                    for subkey in json_data[majorkey]: # 6 categories: consumption_preferences_shopping...
+                        for subsubkey in subkey["consumption_preferences"]:
+                            raw_score_data.append(subsubkey["score"])
+                        data_dict[subkey['name'].replace(" ", "_")] = raw_score_data
 
         print(data_dict)
     return data_dict

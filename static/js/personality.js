@@ -48,7 +48,25 @@ function dataToDataTab(data_dict) {
             for (var j = 0; j < labels_list.length; j++) {
                 new_li = document.createElement("LI");
                 new_text_node = document.createTextNode(labels_list[j]);
-                new_li.appendChild(new_text_node);
+
+                // if the category is one of the big 5, add a chevron 
+                if (main_categories[i] == "personality") {
+                    var new_span = document.createElement("SPAN");
+                    new_span.className = "glyphicon glyphicon-chevron-right";
+                    new_li.appendChild(new_span);
+                    // also make the title of the category clickable
+                    new_li.setAttribute("data-toggle","collapse");
+                    new_li.setAttribute("data-target","#" + labels_list[j]);
+                    // upon click, change the chevron from right to down and vice versa
+                    $(new_li).click(function(){
+                        if(this.hasClass("glyphicon-chevron-down") {
+                           $(this).className = "glyphicon glyphicon-chevron-right";
+                        } else {
+                        $(this).className = "glyphicon glyphicon-chevron-down";
+                        }
+                    });
+                }
+                new_li.appendChild(new_text_node);            
                 new_sub_li = document.createElement("LI");
                 // generating the progress bars and vallues. the [1] below corresponds to getting percentiles instead of raw value.
                 new_sub_progress_node = document.createElement("PROGRESS");

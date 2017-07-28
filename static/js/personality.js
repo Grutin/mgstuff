@@ -189,6 +189,13 @@ function returnLabelList(parent_label) {
         case "Extraversion": return ["activity_level","assertiveness","cheerfulness","excitement_seeking","outgoing","gregariousness"];  break;
         case "Agreeableness": return ["altruism","cooperation","modesty","uncompromising","sympathy","trust"];  break;
         case "Emotional_range": return ["anger","anxiety","depression","immoderation","self_consciousness","susceptible_to_stress"];  break;
+        case "Purchasing_Preferences": return ["consumption_preferences_automobile_ownership_cost","consumption_preferences_clothes_quality","consumption_preferences_clothes_style",
+                                                         "consumption_preferences_clothes_comfort","consumption_preferences_influence_brand_name","consumption_preferences_influence_utility",
+                                                         "consumption_preferences_influence_online_ads","consumption_preferences_influence_social_media","consumption_preferences_influence_family_members",
+                                                         "consumption_preferences_spur_of_moment","consumption_preferences_credit_card_payment"]; break;
+        case "Environmental_Concern_Preferences": return ["consumption_preferences_concerned_environment"]; break;
+        case "Entrepreneurship_Preferences": return ["consumption_preferences_start_business"]; break;
+        
     }
 }
 

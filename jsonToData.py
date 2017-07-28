@@ -54,9 +54,10 @@ def jsonToData(json_data):
                         data_dict[subkey['name'].replace(" ", "_")] = [raw_score_data,percentile_data]
                         
                 elif majorkey == "consumption_preferences":
-                    raw_score_data = []
+
                     
                     for subkey in json_data[majorkey]: # 6 categories: consumption_preferences_shopping...
+                        raw_score_data = []
                         for subsubkey in subkey["consumption_preferences"]:
                             raw_score_data.append(subsubkey["score"])
                         data_dict[subkey['name'].replace(" ", "_")] = raw_score_data

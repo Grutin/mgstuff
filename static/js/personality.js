@@ -48,25 +48,21 @@ function dataToDataTab(data_dict) {
             for (var j = 0; j < labels_list.length; j++) {
                 new_li = document.createElement("LI");
                 new_text_node = document.createTextNode(labels_list[j]);
+                new_title_div = document.createElement("DIV");
+                new_li.appendChild(new_title_div);
+                new_title_div.appendChild(new_text_node);
 
                 // if the category is one of the big 5, add a chevron 
                 if (main_categories[i] == "personality") {
                     var new_span = document.createElement("SPAN");
                     new_span.className = "glyphicon glyphicon-chevron-right";
-                    new_li.appendChild(new_span);
+                    new_title_div.appendChild(new_span);
                     // also make the title of the category clickable
-                    new_li.setAttribute("data-toggle","collapse");
-                    new_li.setAttribute("data-target","#" + labels_list[j]);
-                    // upon click, change the chevron from right to down and vice versa
-                    $(new_li).click(function(){
-                        if(this.hasClass("glyphicon-chevron-down") {
-                           $(this).className = "glyphicon glyphicon-chevron-right";
-                        } else {
-                        $(this).className = "glyphicon glyphicon-chevron-down";
-                        }
-                    });
+                    new_title_div.setAttribute("data-toggle","collapse");
+                    new_title_div.setAttribute("data-target","#" + labels_list[j]);
+
                 }
-                new_li.appendChild(new_text_node);            
+
                 new_sub_li = document.createElement("LI");
                 // generating the progress bars and vallues. the [1] below corresponds to getting percentiles instead of raw value.
                 new_sub_progress_node = document.createElement("PROGRESS");
@@ -91,6 +87,7 @@ function dataToDataTab(data_dict) {
             // the parent div is necessary to hide/display all at once
             var new_div = document.createElement("div");
             new_div.id = sub_categories[i];
+            new_div.className += "collapse accordion-body";
             labels_list = returnLabelList(sub_categories[i]);
              // eaach of those sub categories have a series of subsubcategories
             for (var j = 0; j < labels_list.length; j++) {
@@ -111,10 +108,19 @@ function dataToDataTab(data_dict) {
                 new_li.appendChild(new_sub_li);
                 new_div.appendChild(new_li);
             }
-            parent_li.appendChild(new_div);
+            $(new_div).insertAfter(parent_li)
         }
 
-        // make the collapsable chevrons first requires to add
+        // add a click listener to change the chevron on the menus
+        $('*[data-toggle="collapse"]').click(function(){
+            console.log("event triggered");
+            console.log(this);
+            if($(this.children[0]).hasClass("glyphicon-chevron-down")) {
+               this.children[0].className = "glyphicon glyphicon-chevron-right";
+            } else {
+            this.children[0].className = "glyphicon glyphicon-chevron-down";
+            }
+         });
 
         // now put the "Data" tab active in the columns
         DataTabs = $( ".tablinks:contains('Data')" );
@@ -137,10 +143,7 @@ function dataToChart(data_dict) {
     document.addEventListener("DOMContentLoaded", function(event) {
 
         // start by making a list of all the ids (corresponding to all the graphs)
-        id_list = []
-        for (var key in data_dict) {
-            id_list.push(key);
-        }
+        id_list = ["values","needs","personality"];
 
         // iterate over the list of ids to build each chart
         for (var i=0; i < id_list.length; i++ ) {
@@ -173,7 +176,6 @@ function dataToChart(data_dict) {
                 ]
               }
             });
-
         }
 
     });

@@ -62,6 +62,7 @@ def jsonToData(json_data):
                             raw_score_data.append(subsubkey["score"])
                         data_dict[subkey['name'].replace(" ", "_")] = raw_score_data
 
+        print("data_dict =")
         print(data_dict)
     return data_dict
 

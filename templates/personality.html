@@ -5,22 +5,15 @@
 {% endblock %}
 
 {% block head %}
-    {{ super() }}
+{{ super() }}
 <!-- Boostrap links -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
 <script src="{{ url_for('static', filename='js/personality.js') }}"></script>
 
 <!-- Chart.js -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 
-   {% if dataFile != "none" %}
-      <script>
-          dataToChart({{ dataFile|tojson }});
-          dataToDataTab({{ dataFile|tojson }});
-      </script>
-   {% endif %}
 
 {% endblock %}
 
@@ -38,18 +31,23 @@
          <br>
          <a href="https://personality-insights-livedemo.mybluemix.net/">More details here.</a>
     </h5>
-    <form action = "http://localhost:5000/personality" method = "POST" enctype = "multipart/form-data">
+    {% if error %}
+    <div class = "alert alert-danger">
+        <strong>Error!</strong> {{ error }}
+    </div>
+    {% endif %}
+    <form method = "POST" enctype = "multipart/form-data">
         <div>
             <div class="left-col">
-                <h5>To run the analysis, either paste some text:</h5>
-                <input name="paragraph_text" id="text_input_field" type="text" name="textField" />
+                <h5>To run the analysis, either paste some text (at least 100 words!):</h5>
+                {{ form.freeText(style="height: 150px; width:220px;") }}
             </div>
             <div class="middle-col">
-                <h2 style="text-align:center; line-height:278px">- Or -</h2>
+                <h2 style="text-align:center; ">- Or -</h2>
             </div>
             <div class="right-col">
                 <h5>Upload a txt file:</h5>
-                     <input type = "file" name = "file" id="fileItem"  />
+                {{ form.fileField }}
             </div>
         </div>
         <!-- Clear :) -->
@@ -61,52 +59,6 @@
         </div>
     </form>
 </div>
-
-
-<div class="content pagewrap" id="col-container">
-    <!--only add content if the template received a file from the API-->
-    {% if dataFile != "none" %}
-    <!--The 3 columns-->
-    <div class="left-col" id="bigfive_col">
-        <div class="tab">
-          <button class="tablinks" onclick="openTab(this, 'Data')">Data</button>
-          <button class="tablinks" onclick="openTab(this, 'Graph')">Graph</button>
-        </div>
-        <div class="Data" class="tabcontent">
-        </div>
-        <div class="Graph" class="tabcontent">
-        </div>
-    </div>
-    <div class="middle-col" id="needs_col">
-        <div class="tab">
-          <button class="tablinks" onclick="openTab(this, 'Data')">Data</button>
-          <button class="tablinks" onclick="openTab(this, 'Graph')">Graph</button>
-        </div>
-        <div class="Data" class="tabcontent">
-        </div>
-        <div class="Graph" class="tabcontent">
-        </div>
-    </div>
-    <div class="right-col" id="values_col">
-        <div class="tab">
-          <button class="tablinks" onclick="openTab(this, 'Data')">Data</button>
-          <button class="tablinks" onclick="openTab(this, 'Graph')">Graph</button>
-        </div>
-        <div class="Data" class="tabcontent">
-        </div>
-        <div class="Graph" class="tabcontent">
-        </div>
-    </div>
-</div>
-<div class="content pagewrap">
-    <!--For graphs-->
-
-        {% for key, value in dataFile.items() %}
-        <canvas id={{key}} width="400px" height="225px"></canvas>
-        {% endfor %}
-    {% endif %}
-</div>
-
 
 {% endblock %}
 

@@ -64,7 +64,7 @@ function dataToDataTab(data_dict) {
                 }
 
                 new_sub_li = document.createElement("LI");
-                // generating the progress bars and vallues. the [1] below corresponds to getting percentiles instead of raw value.
+                // generating the progress bars and values. the [1] below corresponds to getting percentiles instead of raw value.
                 new_sub_progress_node = document.createElement("PROGRESS");
                 new_sub_progress_node.className += "progress";
                 new_sub_progress_node.max = 1;
@@ -132,10 +132,6 @@ function dataToDataTab(data_dict) {
 }
 
 
-// helper function for the
-function toggleCollapse(menu) {
-
-}
 
 // this handles the chart display
 
@@ -154,7 +150,7 @@ function dataToChart(data_dict) {
 
         // now compile all the data in the graph
             
-            var ctx = document.getElementById(id_list[i]).getContext('2d');
+            var ctx = document.getElementById(id_list[i] + "-graph").getContext('2d');
             var myChart = new Chart(ctx, {
               type: 'radar',
               data: {
@@ -181,6 +177,7 @@ function dataToChart(data_dict) {
     });
 }
 
+// this makes a correspondance between top and sub categories
 function returnLabelList(parent_label) {
     switch(parent_label) {
         case "personality": return ["Openness","Conscientiousness","Extraversion","Agreeableness","Emotional_range"]; break;
@@ -209,40 +206,13 @@ function returnLabelList(parent_label) {
     }
 }
 
-function checkButton() {
-    console.log("function checkbutton() triggered");
-    // check if there is text in the text field. if there is, take it, if there isn't, take document attached.
-    var textInput = document.getElementById("text_input_field").innerHTML;
-    if (textInput !== "") {
-        XHR_send(textInput);
-    } else { // there must be a file attached, so send this
-        var file = document.getElementById('fileItem').files[0];
-        XHR_send(file);
-    }
-}
-
-// this handles the file upload
-function XHR_send(input) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'myservice/username?id=some-unique-id');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function() {
-        if (xhr.status === 200 && xhr.responseText !== newName) {
-            alert('Something went wrong.  Name is now ' + xhr.responseText);
-        }
-        else if (xhr.status !== 200) {
-            alert('Request failed.  Returned status of ' + xhr.status);
-        }
-    };
-    xhr.send(encodeURI('name=' + input));
-}
 
 // this handles the status of the button "send" to submit text
 $(document).ready(function() {
      $(':input[type="submit"]').prop('disabled', true);
 
      // this handles the text area
-     $('input[type="text"]').keyup(function() {
+         $('#freeText').keyup(function() {
         if($(this).val() != '') {
            $(':input[type="submit"]').prop('disabled', false);
         } else { // if there was text that's been removed
@@ -260,7 +230,7 @@ $(document).ready(function() {
                 $(':input[type="submit"]').prop('disabled', false);
 
             } else { // if there was a file but it's been removed
-                if ($(':input[type="text"]') == '') { // if the text area is also empty
+                if ($('#freeText')[0].value == '') { // if the text area is also empty
                     $(':input[type="submit"]').prop('disabled', true);
                 }
             }

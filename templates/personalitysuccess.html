@@ -1,0 +1,66 @@
+{% extends "personality.html" %}
+
+{% block head %}
+    {{ super() }}
+    {% if dataFile %}
+
+        <script>
+              dataToChart({{ dataFile|tojson }});
+              dataToDataTab({{ dataFile|tojson }});
+          </script>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+
+<div class="content pagewrap" id="col-container">
+    <!--only add content if the template received a file from the API-->
+    {% if dataFile %}
+    <!--The 3 columns-->
+    <div class="left-col" id="bigfive_col">
+        <div class="tab">
+          <button class="tablinks" onclick="openTab(this, 'Data')">Data</button>
+          <button class="tablinks" onclick="openTab(this, 'Graph')">Graph</button>
+        </div>
+        <div class="Data" class="tabcontent">
+        </div>
+        <div class="Graph" class="tabcontent" style="display: none;">
+            <canvas id="personality-graph" width="100%"></canvas>
+        </div>
+    </div>
+    <div class="middle-col" id="needs_col">
+        <div class="tab">
+          <button class="tablinks" onclick="openTab(this, 'Data')">Data</button>
+          <button class="tablinks" onclick="openTab(this, 'Graph')">Graph</button>
+        </div>
+        <div class="Data" class="tabcontent">
+        </div>
+        <div class="Graph" class="tabcontent" style="display: none;">
+            <canvas id="needs-graph" width="100%"></canvas>
+        </div>
+    </div>
+    <div class="right-col" id="values_col">
+        <div class="tab">
+          <button class="tablinks" onclick="openTab(this, 'Data')">Data</button>
+          <button class="tablinks" onclick="openTab(this, 'Graph')">Graph</button>
+        </div>
+        <div class="Data" class="tabcontent">
+        </div>
+        <div class="Graph" class="tabcontent" style="display: none;">
+            <canvas id="values-graph" width="100%"></canvas>
+        </div>
+    </div>
+</div>
+<div class="content pagewrap">
+    <!--For graphs-->
+
+        {% for key, value in dataFile.items() %}
+        <canvas id={{key}} width="400px" height="225px"></canvas>
+        {% endfor %}
+    {% endif %}
+</div>
+
+
+{% endblock %}
+
